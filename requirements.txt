@@ -1,0 +1,13 @@
+numpy
+opencv-python
+matplotlib
+scikit-image
+scikit-learn
+pandas
+seaborn
+torch
+torchvision
+Pillow
+tensorflow
+tf-slim
+imutils

@@ -1,23 +1,60 @@
-# Winter Semester 2021 - Project
+﻿# Contour Detection and Image Segmentation
 
-## to Run the detectors:
-1. Prepare all files:
-    1. Unzip the _Contour_Detectors.zip_
-    2. Make sure that both folders exists in the main directory
-    3. Download The encoder-decoder network weights from this link [Models Weights](https://drive.google.com/file/d/1vRqmVjxqkYLMHvPjw8-uny2gxGWWpZuc/view?usp=sharing "Models Weights")
-    4. In the _ContourDetector.py_ in the _Contour-Detection-Pytorch_ edit the path (in line 26) of the model to the path of the modelweights downloaded. 
-2. Now the detectors are ready, open text.py File in the main directory
-4. in the Main, change the path to be the path of the image to be tested.
-    * make sure the image path is in the format `r"D:\path-to-the-image"`
-5. in the command line run the bellow line OR run the text.py file using any editor
-    `python test.py`
+This repository has been reorganized into a cleaner structure with `code/`, `data/`, and `tests/` directories.
 
-- - - -
-## results example:
+## Project structure
+- `code/`: main Python modules and scripts
+- `data/`: dataset and example assets
+- `test/`: unit and integration checks
+- `archive/`: backup and legacy files
 
-### The Image
-![picture alt](https://github.com/BerlinDMET901/project-mit-kase-1/blob/main/8068.jpg "The Image")
+## Setup
+1. Create and activate a Python environment.
+2. Install dependencies:
 
-### The results:
+```bash
+pip install -r requirements.txt
+```
 
-![picture alt](https://github.com/BerlinDMET901/project-mit-kase-1/blob/main/Results.png "The results")
+## Running segmentation
+Use the script in `code/`:
+
+```bash
+python code/test.py data/8068.jpg
+```
+
+To run contour detection with a downloaded weight file, pass the optional argument:
+
+```bash
+python code/test.py data/8068.jpg --contour_weights Contour-Detection-Pytorch/models/Detector_model.pth
+```
+
+This script will:
+- run MeanShift segmentation
+- run FCN ResNet101 segmentation
+- optionally run external detectors if available in `PbLite-Contour-Detection/Code` and `Contour-Detection-Pytorch`
+- save a comparison image in the root `results/` folder (created automatically)
+
+> Note: The encoder-decoder contour detector requires a trained weight file at `Contour-Detection-Pytorch/models/Detector_model.pth`. If you do not have this file, the contour detector will skip automatically and still show segmentation results.
+
+## Evaluating predictions
+Use the evaluation script in `code/`:
+
+```bash
+python code/evaluate.py --ground_truth_dir data/project_dataset/images/test --prediction_dir data/Results/encoder_decoder_contours1 --output_csv evaluation_report.csv
+```
+
+Optional flags:
+- `--prefix` to add a filename prefix for prediction files
+- `--ext` to restrict evaluation to a specific extension, e.g. `.png`
+
+## Tests
+Run the repository tests with pytest:
+
+```bash
+pytest test
+```
+
+## Notes
+- The encoder-decoder detector and PbLite modules are optional and may require external setup.
+- If those optional modules are not available, `code/test.py` will still run the built-in MeanShift and FCN segmentation.
