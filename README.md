@@ -50,10 +50,17 @@ Optional flags:
 
 ## Tests
 Run the repository tests with pytest:
-
 ```bash
 pytest test
 ```
+## Results:
+To compare the 4 different models, we ran the code for this test image:
+
+<img width="240" height="160" alt="8068" src="https://github.com/user-attachments/assets/995d0b2e-f20b-4371-b6b5-317fcaaf13c3" />
+
+The results for this image:
+
+<img width="640" height="480" alt="Results" src="https://github.com/user-attachments/assets/bb8043c4-9291-4371-9b3c-2eb736ec393d" />
 
 ## Notes
 - The encoder-decoder detector and PbLite modules are optional and may require external setup.
